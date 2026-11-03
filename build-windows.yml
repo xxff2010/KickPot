@@ -1,0 +1,66 @@
+name: Build KickPot Windows Installer
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install Qt 6 (MSVC 2022, 64-bit)
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.*'
+          host: windows
+          target: desktop
+          arch: win64_msvc2022_64
+          cache: true
+
+      - name: Set up MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Configure (CMake)
+        shell: pwsh
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 "-DCMAKE_PREFIX_PATH=$env:QT_ROOT_DIR"
+
+      - name: Build (Release)
+        shell: pwsh
+        run: cmake --build build --config Release --parallel
+
+      - name: Collect runtime files with windeployqt
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path dist/KickPot -Force | Out-Null
+          Copy-Item build/Release/KickPot.exe dist/KickPot/
+          windeployqt --release --no-translations dist/KickPot/KickPot.exe
+          if (-not (Test-Path dist/KickPot/Qt6Widgets.dll)) { throw "Qt6Widgets.dll is missing from the package." }
+          if (-not (Test-Path dist/KickPot/platforms/qwindows.dll)) { throw "platforms/qwindows.dll is missing from the package." }
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup --no-progress -y
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { throw "Inno Setup compiler not found: $iscc" }
+          & $iscc KickPot.iss
+          if (-not (Test-Path dist/KickPot-Setup.exe)) { throw "Installer was not created." }
+
+      - name: Upload Windows installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: KickPot-Setup
+          path: dist/KickPot-Setup.exe
+          if-no-files-found: error
+          retention-days: 30

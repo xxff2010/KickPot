@@ -1,0 +1,173 @@
+/* ===== Base ===== */
+QMainWindow, QWidget#Root {
+    background-color: #101010;
+}
+QWidget {
+    color: #FFFFFF;
+    font-size: 14px;
+}
+QLabel {
+    background: transparent;
+}
+QStackedWidget {
+    background-color: #101010;
+}
+
+/* ===== Sidebar ===== */
+QFrame#Sidebar {
+    background-color: #1B1B1B;
+    border: none;
+}
+QLabel#LogoBadge {
+    background-color: #53FC18;
+    color: #101010;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 800;
+}
+QLabel#LogoText {
+    font-size: 20px;
+    font-weight: 700;
+}
+QLabel#VersionLabel {
+    color: #A0A0A0;
+    font-size: 12px;
+}
+
+QPushButton#NavButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 10px;
+}
+QPushButton#NavButton:hover {
+    background-color: #222222;
+}
+QPushButton#NavButton:checked {
+    background-color: rgba(83, 252, 24, 0.12);
+}
+QPushButton#NavButton QLabel {
+    color: #A0A0A0;
+    font-size: 15px;
+}
+QPushButton#NavButton:hover QLabel {
+    color: #FFFFFF;
+}
+QPushButton#NavButton:checked QLabel {
+    color: #53FC18;
+}
+
+/* ===== Typography ===== */
+QLabel#PageTitle {
+    font-size: 28px;
+    font-weight: 700;
+}
+QLabel#PageSubtitle,
+QLabel#MutedText {
+    color: #A0A0A0;
+}
+QLabel#SectionTitle {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ===== Cards ===== */
+QFrame#Card {
+    background-color: #222222;
+    border: 1px solid #303030;
+    border-radius: 14px;
+}
+QLabel#CardTitle {
+    color: #A0A0A0;
+    font-size: 13px;
+}
+QLabel#CardValue {
+    font-size: 20px;
+    font-weight: 700;
+}
+QLabel#CardValue[state="ok"] {
+    color: #53FC18;
+}
+QLabel#CardValue[state="warning"] {
+    color: #FFC107;
+}
+QLabel#CardValue[state="error"] {
+    color: #FF4444;
+}
+
+/* ===== Placeholder pages ===== */
+QLabel#BigIcon {
+    color: #53FC18;
+    font-size: 54px;
+}
+QLabel#Badge {
+    background-color: rgba(255, 193, 7, 0.15);
+    color: #FFC107;
+    border-radius: 12px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ===== Buttons ===== */
+QPushButton#PrimaryButton {
+    background-color: #53FC18;
+    color: #101010;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-weight: 600;
+}
+QPushButton#PrimaryButton:hover {
+    background-color: #6BFF3A;
+}
+QPushButton#PrimaryButton:pressed {
+    background-color: #43D412;
+}
+QPushButton#SecondaryButton {
+    background-color: #1B1B1B;
+    color: #FFFFFF;
+    border: 1px solid #303030;
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-weight: 600;
+}
+QPushButton#SecondaryButton:hover {
+    border-color: #53FC18;
+    color: #53FC18;
+}
+
+/* ===== Combo box ===== */
+QComboBox {
+    background-color: #1B1B1B;
+    border: 1px solid #303030;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+QComboBox:hover {
+    border-color: #53FC18;
+}
+QComboBox QAbstractItemView {
+    background-color: #1B1B1B;
+    border: 1px solid #303030;
+    selection-background-color: #53FC18;
+    selection-color: #101010;
+}
+
+/* ===== Scrollbars ===== */
+QScrollBar:vertical {
+    background: transparent;
+    width: 10px;
+    margin: 0;
+}
+QScrollBar::handle:vertical {
+    background: #303030;
+    border-radius: 5px;
+    min-height: 30px;
+}
+QScrollBar::handle:vertical:hover {
+    background: #53FC18;
+}
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0;
+}
